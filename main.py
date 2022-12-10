@@ -5,22 +5,16 @@ from time import sleep
 from datetime import datetime
 
 
-def get_date(date: datetime, value: int):
+def get_date(date: datetime):
 
-    for _ in range(value):
+    for _ in range(5):
         thr_name = threading.current_thread().name
         print(f"{thr_name} -- {date}")
         sleep(1)
 
-thread_list: list = []
 
-for i in range(3):
-    thr = threading.Thread(target=get_date, args=(str(datetime.now()), i), name=f"thr-{i}")
-    thread_list.append(thr)
-    thr.start()
+thr = threading.Thread(target=get_date, args=(str(datetime.now()), ), name=f"thr-1", daemon=True)
+thr.start()
 
-
-for i in thread_list:
-    i.join()
-
+print("finish")
 
