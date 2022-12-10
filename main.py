@@ -2,23 +2,16 @@ import threading
 
 from time import sleep
 
-from datetime import datetime
 
-locker = threading.Lock()
-
-
-value = 0
-
-def inc_value():
-    global value
+def test():
     while True:
-        locker.acquire()
-        value += 1
-        print(value)
+        print("test")
         sleep(1)
-        locker.release()
-        
 
 
-for _ in range(5):
-    threading.Thread(target=inc_value).start()
+threading.Timer(10, test).start()
+
+
+while True:
+    print(1)
+    sleep(2)
