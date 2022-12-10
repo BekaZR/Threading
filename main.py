@@ -4,17 +4,21 @@ from time import sleep
 
 from datetime import datetime
 
+locker = threading.Lock()
 
-def get_date(date: datetime):
 
-    for _ in range(5):
-        thr_name = threading.current_thread().name
-        print(f"{thr_name} -- {date}")
+value = 0
+
+def inc_value():
+    global value
+    while True:
+        locker.acquire()
+        value += 1
+        print(value)
         sleep(1)
+        locker.release()
+        
 
 
-thr = threading.Thread(target=get_date, args=(str(datetime.now()), ), name=f"thr-1", daemon=True)
-thr.start()
-
-print("finish")
-
+for _ in range(5):
+    threading.Thread(target=inc_value).start()
